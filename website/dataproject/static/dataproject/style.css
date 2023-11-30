@@ -1,0 +1,23 @@
+body {
+    background-color: rgba(255, 253, 251, 0.966);
+}
+
+h3{
+    margin-bottom: 20px;
+}
+
+#accordionPanels.accordion {
+    margin-bottom: 20px; 
+}
+
+.content-container {
+    margin-top: 50px; 
+}
+
+.custom-navbar {
+    background-color: #a6a4d5 !important;
+}
+
+.custom-pagination {
+    margin-top: 20px !important; 
+}

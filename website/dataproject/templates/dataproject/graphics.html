@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse de Données</title>
+
+    <!-- Inclusion des fichiers Bootstrap depuis CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}"> 
+</head>
+<body>
+  <!-- Barre de navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="#">Python Analysis</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'graphics' %}">Graphics</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </nav>
+    <!-- Contenu de la page -->
+    <div class="container mt-5">
+        <h3>Graphical representation of data</h3>
+        <p>
+            This data visualization provides an in-depth view of visitor behavior on a website. Examining the monthly distribution 
+            reveals missing months and significant traffic peaks in May, November, March, and December, potentially linked 
+            to events like Black Friday.  So as expected, returning visitors dominate the traffic, followed by new visitors 
+            and other categories. Despite a majority of returning visitors, November and December see more new visitors, 
+            likely associated with specific events.  With all of this,  only 15% of visits result in purchases. 
+            Further exploration suggests that new visitors tend to explore administrative pages more, while regular 
+            visitors prefer product pages.
+
+        </p>
+        <div class="accordion" id="accordionPanels">
+    
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    Categories of Visitors
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    {{ categ_visitors_plot | safe}}
+                    <p>With this initial view of the data, especially the distribution among categories, we clearly observe that the majority of people visiting the website are Returning visitors, those who have already visited the site at least once. <br>
+                        Following that, we have new visitors, representing only 14%, and then others with less than 1%.
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFourteen" aria-expanded="false" aria-controls="panelsStayOpen-collapseFourteen">
+                    Month distribution
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFourteen" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ month_visitors_plot | safe}}
+                    <p>
+                        The interest in visualizing the monthly distribution of visitors is twofold.<br>
+                        Firstly, it allows us to identify the missing months, namely January and April. 
+                        While the reason for their absence is currently unknown, further investigation will be conducted with additional information.<br>
+                        Secondly, the top four months with the highest website traffic are May, November, March, and December.<br>               
+                        It can be reasonably assumed that the increased activity in November and December is possibly attributed to Black Friday and Christmas.
+                         
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                    Weekend visits
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ weekends_cnt_plot | safe}}
+                    <p>Here, this graph simply shows us that there are more visits to the website during weekdays than on the weekend. However, it's worth noting that the 23% on the weekend is still relatively high, considering there are only two days in the weekend.</p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseDis" aria-expanded="false" aria-controls="panelsStayOpen-collapseDis">
+                    Revenue distribution
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseDis" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ revenue_dist_plot | safe}}
+                    <p>Here, we wanted to examine the proportion of visits that result in a purchase. We observe that the majority of visits are merely visits, with only 15% of them resulting in a purchase.</p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                    Revenue during special days
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ revenue_special_days_plot | safe}}
+                    <p>We see that there is no need to be on a special day for having higher revenue on the site</p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                    Revenue during weekend
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ revenue_weekends_plot | safe}}
+                    <p>There are more visits overall that do not result in a transaction, and there is maybe not necessarily a correlation between the time period (weekday or weekend) and transactions</p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                    Visitors category by month
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ visitors_month_plot | safe}}
+                    <p>
+                        As the majority of the quantity pertains to returning visitors, it is evident that every month sees more returning visitors than new ones. However, upon closer examination, we observe that among 
+                        the top three months (March, November, and December), there are more new visitors in November and December than in May, even though May has the highest number of returning visitors. 
+                        This observation may be attributed to events such as Black Friday and Christmas. <br>
+                        Finally, the proportion of Other visitors is also concentrated in November and December, which could be related to web scraping, a practice that usually occurs during this period of the year
+
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                    Revenue by visitor type
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ revenue_visitor_type_plot | safe}}
+                    <p>
+                        With this graph, we see that 77% of purchases are made by returning visitors, while 22% are made by new ones. So we think that this is likely influenced by the higher number of returning visitors.
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="false" aria-controls="panelsStayOpen-collapseSeven">
+                    Number views of by visits page type
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ views_pages_type_plot | safe}}
+                    <p>
+                        Here, we observe that there are more people visiting product-related pages than administrative or informational pages. It appears that the majority of visitors already have a specific product in mind.
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
+                    Visitors type by page type
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ visitors_type_page_type_plot | safe}}
+                    <p>
+                        To complement the previous graph, we decided to create a chart that illustrates, for each category of visitor, the median value of the number of pages in the three-page categories.<br>
+                        We chose the median as the most representative indicator because we have a value for which 50% of the values are above and the other 50% are below.<br>                     
+                        This graph is particularly interesting because it clearly shows that new visitors tend to visit slightly more administrative pages than returning 
+                        visitors or others. A contrario, returning visitors tend to visit more product-related pages than new visitors.<br>
+                        Therefore, we can infer that returning visitors may be more familiar with the articles they seek and have more trust in the website, having visited before. On the other hand, 
+                        new visitors may be more hesitant and require more assistance on the site.
+                        
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseNine" aria-expanded="false" aria-controls="panelsStayOpen-collapseNine">
+                    Administrative Pages visits by Visitor Type
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseNine" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ admin_pages_visitors_type_plot | safe}}
+                    <p>
+                        The purpose of creating these box plots is to visually explore the behavior of visitor types concerning their interaction with administrative pages.<br>
+                        In fact, these pages typically contain information related to account management and contact details. By examining the box plots, we can draw several observations.<br>      
+                        First, the highest observed value for the number of administrative pages visited, excluding extreme values for the 2 main boxes (Returning visitors and New visitors) is 11.<br>     
+                        So we can say that despite the numerical dominance of "Returning Visitors," "New Visitors" exhibit a comparable or even higher interest in administrative pages. 
+                        The median values (1 for Returning and 2 ffor New) support the conclusion that "New Visitors" tend to explore these pages more frequently than "Returning Visitors." 
+                        The visualization provides a clear and concise understanding of the distribution and central tendencies of different type of visitors regarding those pages.
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwelve" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwelve">
+                    Correlation matrix
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwelve" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ correlation_matrix_plot | safe}}
+                    <p>
+                        Besides the type of pages and their associated durations, the only variables that seem to be correlated are the Bounce rate and the Exit rate, 
+                        showing a correlation of 91%. So we will not use Exit rate as there is to much correlation between them.
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThirteen" aria-expanded="false" aria-controls="panelsStayOpen-collapseThirteen">
+                    Bounce Rate by Visitor type
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThirteen" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {{ bounce_rate_visitor_type_plot | safe}}
+                    <p>
+                        The bounce rate is higher for Other visitors than for returning or new visitors.<br>
+                        Thus, for each category of visitor, we can associate this with the many possibility. 
+                        First,other visitors may be web scrapers seeking specific information, and returning visitors who are accustomed to the site, they might be looking for a particular product.<br>                   
+                        Meanwhile, new visitors may spend more time on pages as they are less accustomed, which is why the bounce rate is lower for this group.
+                        
+                    </p>
+                </div>
+                </div>
+            </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item"><a class="page-link" href="{% url 'home' %}">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="{% url 'home' %}">1</a></li>
+          <li class="page-item"><a class="page-link" href="{% url 'graphics' %}">2</a></li>
+          <li class="page-item"><a class="page-link" href="{% url 'graphics' %}">Next</a></li>
+        </ul>
+    </nav>
+
+    <!-- Pied de page -->
+    <footer class="mt-5 text-center">
+        <p>&copy; 2023 ESILV - DIA4 - Ulysse BOURDILLON, Emmanuelle MEVANZA, Hélène TE</p>
+    </footer>
+
+    <!-- Inclusion des fichiers JavaScript Bootstrap depuis CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    <!-- Ajoutez ici d'autres liens vers des fichiers JavaScript si nécessaire -->
+
+</body>
+</html>
