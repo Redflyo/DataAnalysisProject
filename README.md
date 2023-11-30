@@ -21,6 +21,13 @@ We also developed an interface using the Django framework to visualize the graph
 ## Results
 
 The results of different models, including best parameters, training accuracy, classification report, and confusion matrix, are provided in the code.
--------A COMPLETER--------- (avec ce paragraphe)
+
 This data visualization provides an in-depth view of visitor behavior on a website. Examining the monthly distribution reveals missing months and significant traffic peaks in May, November, March, and December, potentially linked to events like Black Friday.  So as expected, returning visitors dominate the traffic, followed by new visitors and other categories. Despite a majority of returning visitors, November and December see more new visitors, likely associated with specific events.  With all of this,  only 15% of visits result in purchases. Further exploration suggests that new visitors tend to explore administrative pages more, while regular visitors prefer product pages
+
+We applied Data Pre-Processing on the dataset. We used OneHotEncoder, RobustScaler and custom function like convert month to int values.
+To display possible clusters we apply a PCA transformation. No cluster has been identified.
+We tried to identify cluster related to the Revenue variable (True or False)
+Consequently, we apply KMeans and the Elbow method but result was not interesting because all the values were attributed to only one cluster.
+We did a simple regression with SVR to predict PageValues. To find the best parameters GridSearch was usefull.
+As a bonus we present you Shapash project, it allow us to explain more deeper the reasons our model predictions.
 
